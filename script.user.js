@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AfreecaTV clip for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.7.2
+// @version      0.7.3
 // @namespace    https://www.dogdrip.net/
 // @description  Convert AfreecaTV user clip links to iframe in dogdrip
 // @author       noodlekiller
@@ -56,27 +56,34 @@
                 // 해당 div 내의 모든 <p> 태그를 검색
                 const paragraphs = div.querySelectorAll('p');
                 paragraphs.forEach(p => {
-                    // 각 <p> 내의 모든 링크 검색
+                    // 클립의 url
+                    let iframeURL = null;
+                    // <p> 태그 내에 있는 모든 <a> 태그 검색
                     const links = p.querySelectorAll('a');
-                    links.forEach(link => {
-                        const iframeURL = createAfreecaTVIframeURL(link.href);
-                        if (iframeURL) {
-                            // 유효한 링크를 찾으면 iframe으로 변환
-                            const iframe = document.createElement('iframe');
-                            iframe.id = "afreecatv_player_video";
-                            iframe.className = "AfreecaPlayer"
-                            iframe.src = iframeURL;
-                            iframe.frameBorder = "0";
-                            iframe.allowFullscreen = true;
-                            iframe.allow = "clipboard-write";
-                            iframe.style.width = "100%";
-                            iframe.style.height = "523px";
-    
-                            // p 태그 내용을 iframe으로 교체
-                            p.innerHTML = ''; // p 태그를 비움
-                            p.appendChild(iframe);
-                        }
-                    });
+            
+                    // 만약 <a> 태그가 없고 텍스트 자체가 URL이라면 텍스트를 이용해 처리
+                    if (!links.length) {
+                        iframeURL = createAfreecaTVIframeURL(p.textContent.trim());
+                    } else { // a 태그가 존재한다면 href을 이용해 처리
+                        iframeURL = createAfreecaTVIframeURL(links[0].href)
+                    }
+
+                    if (iframeURL) {
+                        // 유효한 링크를 찾으면 iframe으로 변환
+                        const iframe = document.createElement('iframe');
+                        iframe.id = "afreecatv_player_video";
+                        iframe.className = "AfreecaPlayer"
+                        iframe.src = iframeURL;
+                        iframe.frameBorder = "0";
+                        iframe.allowFullscreen = true;
+                        iframe.allow = "clipboard-write";
+                        iframe.style.width = "100%";
+                        iframe.style.height = "523px";
+
+                        // p 태그 내용을 iframe으로 교체
+                        p.innerHTML = ''; // p 태그를 비움
+                        p.appendChild(iframe);
+                    }
                 });
             }
         });
