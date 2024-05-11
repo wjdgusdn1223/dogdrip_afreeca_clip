@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AfreecaTV Link to Iframe Converter for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Convert AfreecaTV links to iframe in dogdrip
 // @author       noodlekiller
 // @match        https://www.dogdrip.net/*
@@ -21,27 +21,25 @@
         }
     }
 
-    function adjustIframeHeight(iframe) {
-        // 여기에서 비율을 설정합니다. 예: 16:9 비디오의 경우
+    function adjustIframeHeights() {
+        // 모든 'Afreeca Player' 클래스를 가진 iframe 찾기
+        const iframes = document.querySelectorAll('.AfreecaPlayer');
+        // 비율 설정 (예: 16:9)
         const aspectRatio = 16 / 9;
 
-        // iframe의 현재 너비를 계산
-        const width = iframe.clientWidth;
-
-        // 높이를 비율에 따라 설정
-        const newHeight = width / aspectRatio;
-        iframe.style.height = `${newHeight}px`;
+        iframes.forEach(iframe => {
+            const width = iframe.clientWidth; // 현재 iframe의 너비
+            if (width < 930) { // 너비가 최대가 아닐 경우에만 높이 변경
+                const newHeight = width / aspectRatio; // 높이 계산
+                iframe.style.height = `${newHeight}px`; // 높이 설정
+            }
+        });
     }
 
     window.addEventListener('load', () => {
-        const iframe = document.getElementById('afreecatv_player_video');
-        if (iframe) {
-            adjustIframeHeight(iframe);
-            // 윈도우 크기 조정 시 높이 재조정
-            window.addEventListener('resize', () => {
-                adjustIframeHeight(iframe);
-            });
-        }
+        adjustIframeHeights(); // 초기 로딩 시 높이 조정
+        // 창 크기 조정 시 높이 재조정
+        window.addEventListener('resize', adjustIframeHeights);
     });
 
     // rhymix_content와 xe_content 클래스를 모두 가진 div 요소만 검색
@@ -66,6 +64,7 @@
                         // 유효한 링크를 찾으면 iframe으로 변환
                         const iframe = document.createElement('iframe');
                         iframe.id = "afreecatv_player_video";
+                        iframe.class = "AfreecaPlayer"
                         iframe.src = iframeURL;
                         iframe.frameBorder = "0";
                         iframe.allowFullscreen = true;
