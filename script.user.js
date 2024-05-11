@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AfreecaTV clip for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.7.5
+// @version      0.7.6
 // @namespace    https://www.dogdrip.net/
 // @description  Convert AfreecaTV user clip links to iframe in dogdrip
 // @author       noodlekiller
@@ -41,10 +41,10 @@
 
         iframes.forEach(iframe => {
             const width = iframe.clientWidth; // 현재 iframe의 너비
-            if (width < 930) { // 너비가 최대가 아닐 경우에만 높이 변경
+            // if (width < 930) { // 너비가 최대가 아닐 경우에만 높이 변경 -> 작은 화면에서 갑자기 최대화 할 시에 조정이 안되므로 문제가 안되는한 이 부분은 무시
                 const newHeight = width / aspectRatio; // 높이 계산
                 iframe.style.height = `${newHeight}px`; // 높이 설정
-            }
+            // }
         });
     }
 
