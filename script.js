@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         AfreecaTV Link to Iframe Converter for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.5
-// @description  Convert AfreecaTV links to iframe in dogdrip
+// @version      0.6
+// @description  Convert AfreecaTV user clip links to iframe in dogdrip
 // @author       noodlekiller
 // @match        https://www.dogdrip.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=afreecatv.com
