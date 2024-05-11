@@ -1,14 +1,16 @@
 // ==UserScript==
 // @name         AfreecaTV clip for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
+// @namespace    https://www.dogdrip.net/
 // @description  Convert AfreecaTV user clip links to iframe in dogdrip
 // @author       noodlekiller
 // @match        https://www.dogdrip.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=afreecatv.com
-// @homepageURL https://github.com/wjdgusdn1223/dogdrip_afreeca_clip
-// @downloadURL https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.js
-// @updateURL   https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.js
+// @run-at       document-start
+// @homepageURL  https://github.com/wjdgusdn1223/dogdrip_afreeca_clip
+// @downloadURL  https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.js
+// @updateURL    https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.js
 // @grant        none
 // ==/UserScript==
 
