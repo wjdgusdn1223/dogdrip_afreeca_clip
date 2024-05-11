@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AfreecaTV Link to Iframe Converter for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Convert AfreecaTV links to iframe in dogdrip
 // @author       noodlekiller
 // @match        https://www.dogdrip.net/*
@@ -64,7 +64,7 @@
                         // 유효한 링크를 찾으면 iframe으로 변환
                         const iframe = document.createElement('iframe');
                         iframe.id = "afreecatv_player_video";
-                        iframe.class = "AfreecaPlayer"
+                        iframe.className = "AfreecaPlayer"
                         iframe.src = iframeURL;
                         iframe.frameBorder = "0";
                         iframe.allowFullscreen = true;
