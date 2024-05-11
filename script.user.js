@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AfreecaTV clip for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.7.4
+// @version      0.7.5
 // @namespace    https://www.dogdrip.net/
 // @description  Convert AfreecaTV user clip links to iframe in dogdrip
 // @author       noodlekiller
@@ -26,7 +26,7 @@
             const regex = /^https:\/\/vod\.afreecatv\.com\/player\/(\d+)\/.*/;
             // 정규표현식을 사용해 URL에서 비디오 ID를 추출
             const match = url.match(regex);
-            return `https://vod.afreecatv.com/player/${match[1]}/embed?type=catch&showChat=false&autoPlay=flase&mutePlay=false`;
+            return `https://vod.afreecatv.com/player/${match[1]}/embed?type=catch&showChat=false&autoPlay=false&mutePlay=false`;
         }
         else {
             return null;
