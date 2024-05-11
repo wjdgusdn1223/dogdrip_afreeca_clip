@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AfreecaTV clip for dogdrip
 // @namespace    http://tampermonkey.net/
-// @version      0.7.1
+// @version      0.7.2
 // @namespace    https://www.dogdrip.net/
 // @description  Convert AfreecaTV user clip links to iframe in dogdrip
 // @author       noodlekiller
@@ -41,48 +41,48 @@
         });
     }
 
-    window.addEventListener('load', () => {
+    document.addEventListener('DOMContentLoaded', function() {
+        // rhymix_content와 xe_content 클래스를 모두 가진 div 요소만 검색
+        const divs = document.querySelectorAll('div.rhymix_content.xe_content');
+        divs.forEach(div => {
+            // 클래스 리스트 추출
+            const classList = Array.from(div.classList);
+    
+            // document_xxxxxxx_0 패턴의 클래스가 있는지 확인
+            const hasDocumentClass = classList.some(c => /^document_\d+_0$/.test(c));
+    
+            // 해당 패턴이 있을 경우
+            if (hasDocumentClass) {
+                // 해당 div 내의 모든 <p> 태그를 검색
+                const paragraphs = div.querySelectorAll('p');
+                paragraphs.forEach(p => {
+                    // 각 <p> 내의 모든 링크 검색
+                    const links = p.querySelectorAll('a');
+                    links.forEach(link => {
+                        const iframeURL = createAfreecaTVIframeURL(link.href);
+                        if (iframeURL) {
+                            // 유효한 링크를 찾으면 iframe으로 변환
+                            const iframe = document.createElement('iframe');
+                            iframe.id = "afreecatv_player_video";
+                            iframe.className = "AfreecaPlayer"
+                            iframe.src = iframeURL;
+                            iframe.frameBorder = "0";
+                            iframe.allowFullscreen = true;
+                            iframe.allow = "clipboard-write";
+                            iframe.style.width = "100%";
+                            iframe.style.height = "523px";
+    
+                            // p 태그 내용을 iframe으로 교체
+                            p.innerHTML = ''; // p 태그를 비움
+                            p.appendChild(iframe);
+                        }
+                    });
+                });
+            }
+        });
+
         adjustIframeHeights(); // 초기 로딩 시 높이 조정
         // 창 크기 조정 시 높이 재조정
         window.addEventListener('resize', adjustIframeHeights);
-    });
-
-    // rhymix_content와 xe_content 클래스를 모두 가진 div 요소만 검색
-    const divs = document.querySelectorAll('div.rhymix_content.xe_content');
-    divs.forEach(div => {
-        // 클래스 리스트 추출
-        const classList = Array.from(div.classList);
-
-        // document_xxxxxxx_0 패턴의 클래스가 있는지 확인
-        const hasDocumentClass = classList.some(c => /^document_\d+_0$/.test(c));
-
-        // 해당 패턴이 있을 경우
-        if (hasDocumentClass) {
-            // 해당 div 내의 모든 <p> 태그를 검색
-            const paragraphs = div.querySelectorAll('p');
-            paragraphs.forEach(p => {
-                // 각 <p> 내의 모든 링크 검색
-                const links = p.querySelectorAll('a');
-                links.forEach(link => {
-                    const iframeURL = createAfreecaTVIframeURL(link.href);
-                    if (iframeURL) {
-                        // 유효한 링크를 찾으면 iframe으로 변환
-                        const iframe = document.createElement('iframe');
-                        iframe.id = "afreecatv_player_video";
-                        iframe.className = "AfreecaPlayer"
-                        iframe.src = iframeURL;
-                        iframe.frameBorder = "0";
-                        iframe.allowFullscreen = true;
-                        iframe.allow = "clipboard-write";
-                        iframe.style.width = "100%";
-                        iframe.style.height = "523px";
-
-                        // p 태그 내용을 iframe으로 교체
-                        p.innerHTML = ''; // p 태그를 비움
-                        p.appendChild(iframe);
-                    }
-                });
-            });
-        }
     });
 })();
