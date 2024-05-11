@@ -21,6 +21,29 @@
         }
     }
 
+    function adjustIframeHeight(iframe) {
+        // 여기에서 비율을 설정합니다. 예: 16:9 비디오의 경우
+        const aspectRatio = 16 / 9;
+
+        // iframe의 현재 너비를 계산
+        const width = iframe.clientWidth;
+
+        // 높이를 비율에 따라 설정
+        const newHeight = width / aspectRatio;
+        iframe.style.height = `${newHeight}px`;
+    }
+
+    window.addEventListener('load', () => {
+        const iframe = document.getElementById('afreecatv_player_video');
+        if (iframe) {
+            adjustIframeHeight(iframe);
+            // 윈도우 크기 조정 시 높이 재조정
+            window.addEventListener('resize', () => {
+                adjustIframeHeight(iframe);
+            });
+        }
+    });
+
     // rhymix_content와 xe_content 클래스를 모두 가진 div 요소만 검색
     const divs = document.querySelectorAll('div.rhymix_content.xe_content');
     divs.forEach(div => {
