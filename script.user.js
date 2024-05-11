@@ -9,8 +9,8 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=afreecatv.com
 // @run-at       document-start
 // @homepageURL  https://github.com/wjdgusdn1223/dogdrip_afreeca_clip
-// @downloadURL  https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.js
-// @updateURL    https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.js
+// @downloadURL  https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.user.js
+// @updateURL    https://github.com/wjdgusdn1223/dogdrip_afreeca_clip/raw/main/script.user.js
 // @grant        none
 // ==/UserScript==
 
